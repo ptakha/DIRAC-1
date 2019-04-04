@@ -29,6 +29,13 @@ class PilotCStoJSONSynchronizerTestCase(unittest.TestCase):
         }
       }
     }
+    Resources
+    {
+      Sites
+      {
+
+      }
+    }
     Systems
     {
       WorkloadManagement
@@ -69,6 +76,10 @@ class PilotCStoJSONSynchronizerTestCase(unittest.TestCase):
           CA = /DC=ch/DC=voodo/CN=Voodo Grid Certification Authority
           Email = franek.bolek@voodo.pl
         }
+        Nemo
+        {
+
+        }
       }
       Groups
       {
@@ -82,6 +93,14 @@ class PilotCStoJSONSynchronizerTestCase(unittest.TestCase):
           VOMSRole = /lhcb/Role=pilot
           #@@-ggg@diracAdmin - 2015-07-07 13:40:55
           VO = lhcb
+        }
+        Empty_group
+        {
+
+        }
+        Nautilus
+        {
+         Users=Nemo
         }
       }
     }
@@ -127,6 +146,16 @@ class Test_PilotCStoJSONSynchronizer_getDNs(PilotCStoJSONSynchronizerTestCase):
   def test_failure(self):
     synchroniser = PilotCStoJSONSynchronizer()
     res = synchroniser._getDNs('nonExistingGroup')
+    self.assertFalse(res['OK'])
+
+  def test_empty_group(self):
+    synchronizer = PilotCStoJSONSynchronizer()
+    res = synchronizer._getDNs('Empty')
+    self.assertFalse(res['OK'])
+
+  def test_user_without_DN(self):
+    synchronizer = PilotCStoJSONSynchronizer()
+    res = synchronizer._getDNs('Nautilus')
     self.assertFalse(res['OK'])
 
 
