@@ -187,8 +187,8 @@ class PilotCStoJSONSynchronizer(object):
         return S_ERROR('Users in this group don`t have DN ')
       else:
         return S_OK(DNs)
-    except AttributeError:
-      return S_ERROR('Some error occured while getting the DNs.')
+    except AttributeError as ae:
+      gLogger.exception("Error occured while getting the DNs", lException=ae)
 
   def _getPilotOptionsPerSetup(self, setup, pilotDict):
     """ Given a setup, returns its pilot options in a dictionary
